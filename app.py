@@ -23,7 +23,7 @@ if page == '栽植期':
         submit_button = st.form_submit_button(label='送出')
 
     if submit_button:
-        url = 'https://apipost-no-v1.herokuapp.com/users'
+        url = 'https://apipost-no-v1.herokuapp.com/plant'
         res = requests.post(
             url,
             data=json.dumps(data)
@@ -50,7 +50,7 @@ elif page == '預警報':
         submit_button = st.form_submit_button(label='送出')
 
     if submit_button:
-        url = 'https://apipost-no-v1.herokuapp.com/rooms'
+        url = 'https://apipost-no-v1.herokuapp.com/aler'
         res = requests.post(
             url,
             data=json.dumps(data)
