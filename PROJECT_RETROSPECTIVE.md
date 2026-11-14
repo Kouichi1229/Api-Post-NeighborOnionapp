@@ -42,9 +42,10 @@
 
 1. 日期欄位 `update_time` 有建立，但沒有加入送出的 payload。
 2. API 網址寫定為歷史 Heroku endpoint，無法據此確認目前服務狀態。
-3. Requests 呼叫沒有 timeout 參數，也沒有完整的例外處理。
-4. 程式在回應狀態為 200 時顯示成功訊息，之後直接呼叫 `res.json()`；未處理非 JSON 回應。
-5. 目前管理端只串接栽植期與預警報，沒有串接後端預約 API。
+3. Requests 使用 `data=json.dumps(data)` 傳送字串，沒有明確設定 `Content-Type: application/json`；FastAPI JSON body parsing 可能因此無法依預期解析。
+4. Requests 呼叫沒有 timeout 參數，也沒有完整的例外處理。
+5. 程式在回應狀態為 200 時顯示成功訊息，之後直接呼叫 `res.json()`；未處理非 JSON 回應。
+6. 目前管理端只串接栽植期與預警報，沒有串接後端預約 API。
 
 ## 與其他 Repository 的關係
 
