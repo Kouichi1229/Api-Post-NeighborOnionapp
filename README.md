@@ -1,28 +1,22 @@
-# Api-Post-NeighborOnionapp
+# 隔壁老洋｜管理端資料輸入工具
 
-**隔壁老洋｜Streamlit 管理端資料輸入工具**
+本 Repository 是「隔壁老洋」系統的管理端原型，使用 Streamlit 建立表單，讓管理者輸入洋蔥栽植期提醒與預警報，再透過 HTTP POST 將 JSON 資料送至 FastAPI 後端。
 
-本 Repository 提供管理者輸入洋蔥栽植期提醒及預警報的簡易介面，並透過 HTTP POST 將資料送至 [API-client-NeighborOnionapp](https://github.com/Kouichi1229/API-client-NeighborOnionapp)。
+此 Repository 屬於主系統的管理端子模組，不應與後端 API 或整體應用重複計算為獨立產品。
+
+## 主要功能
+
+- 栽植期提醒表單：輸入溫度與雨量注意事項。
+- 預警報表單：輸入預警報文字。
+- 使用 Requests 將表單資料以 POST 請求傳送至後端。
+- 使用 Streamlit 建立簡易操作介面。
 
 ## 技術
 
 - Python
 - Streamlit
 - Requests
-- JSON
-
-## 功能
-
-### 栽植期表單
-
-- 輸入溫度注意事項（最多 150 字）。
-- 輸入雨量注意事項（最多 150 字）。
-- 送出時呼叫 `POST /plant`，傳送 `temp` 與 `rain` 欄位。
-
-### 預警報表單
-
-- 輸入預警報文字（最多 400 字）。
-- 送出時呼叫 `POST /aler`，傳送 `aler` 欄位。
+- JSON / HTTP POST
 
 ## 資料流程
 
@@ -30,17 +24,21 @@
 管理者
   -> Streamlit 表單
   -> Requests POST（JSON）
-  -> FastAPI API
-  -> Pydantic schema
-  -> SQLAlchemy ORM
+  -> FastAPI 後端
+  -> Pydantic / SQLAlchemy
   -> SQLite
 ```
 
-## 程式碼注意事項
+後端 Repository：[API-client-NeighborOnionapp](https://github.com/Kouichi1229/API-client-NeighborOnionapp)
 
-- 表單包含日期輸入欄位，但目前 `update_time` 沒有加入 POST payload，因此程式目前沒有把該日期送往後端。
-- API URL 寫定為歷史 Heroku 網址 `https://apipost-no-v1.herokuapp.com`；這只代表程式當時設定的服務位置，不保證該服務目前仍在線。
-- 目前主要檢查 HTTP 200，錯誤處理尚未涵蓋 timeout、連線失敗及非 JSON 回應。
-- 未見預約功能的管理表單。
+整體系統：[NeighborOnionapp](https://github.com/Kouichi1229/NeighborOnionapp)
 
-完整系統架構及技術回顧請參閱主專案：[NeighborOnionapp](https://github.com/Kouichi1229/NeighborOnionapp)。
+## 程式現況與限制
+
+- 表單雖然提供更新日期欄位，但目前 POST payload 未包含該日期。
+- 後端 URL 寫定為歷史 Heroku 網址，不代表服務目前仍可使用。
+- HTTP 錯誤處理較簡單，尚未完整處理 timeout、連線例外及非 JSON 回應。
+- 目前程式涵蓋栽植期與預警報輸入，沒有管理端預約功能。
+- 本文件依程式碼靜態整理，未重新部署或進行端到端測試。
+
+本專案適合作為 Python Web UI 與 REST API 串接的實作紀錄。
